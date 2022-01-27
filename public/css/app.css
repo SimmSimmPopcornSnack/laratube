@@ -11286,3 +11286,31 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.btn-info {
+  color: #FFF;
+}
+.btn-info:hover {
+  color: #FFF;
+}
+
+.channel-avatar {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  cursor: pointer;
+}
+.channel-avatar .channel-avatar-overlay {
+  display: none;
+}
+.channel-avatar:hover .channel-avatar-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+}

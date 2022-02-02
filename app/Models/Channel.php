@@ -34,4 +34,8 @@ class Channel extends Model implements HasMedia
             ->width(100)
             ->height(100);
     }
+
+    public function subscriptions() {
+        return $this->hasMany(Subscription::class);
+    }
 }

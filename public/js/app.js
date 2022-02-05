@@ -5261,6 +5261,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
 (__webpack_require__(/*! ./components/subscribe-button */ "./resources/js/components/subscribe-button.js")["default"]);
+(__webpack_require__(/*! ./components/channel-uploads */ "./resources/js/components/channel-uploads.js")["default"]);
 var app = new Vue({
   el: '#app'
 });
@@ -5279,6 +5280,29 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+/***/ }),
+
+/***/ "./resources/js/components/channel-uploads.js":
+/*!****************************************************!*\
+  !*** ./resources/js/components/channel-uploads.js ***!
+  \****************************************************/
+/***/ (() => {
+
+Vue.component("channel-uploads", {
+  data: function data() {
+    return {
+      selected: false
+    };
+  },
+  methods: {
+    upload: function upload() {
+      this.selected = true;
+      var videos = this.$refs.videos.files;
+      console.log(videos);
+    }
+  }
+});
 
 /***/ }),
 

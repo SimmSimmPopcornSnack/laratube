@@ -5287,19 +5287,39 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!****************************************************!*\
   !*** ./resources/js/components/channel-uploads.js ***!
   \****************************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
+    axios = _require["default"];
 
 Vue.component("channel-uploads", {
+  props: {
+    channel: {
+      type: Object,
+      required: true,
+      "default": function _default() {
+        return {};
+      }
+    }
+  },
   data: function data() {
     return {
-      selected: false
+      selected: false,
+      videos: []
     };
   },
   methods: {
     upload: function upload() {
+      var _this = this;
+
       this.selected = true;
-      var videos = this.$refs.videos.files;
-      console.log(videos);
+      this.videos = Array.from(this.$refs.videos.files);
+      var videos = this.videos.map(function (video) {
+        var form = new FormData();
+        form.append("video", video);
+        form.append("title", video.name);
+        return axios.post("/channels/".concat(_this.channel.id, "/videos"), form);
+      });
     }
   }
 });

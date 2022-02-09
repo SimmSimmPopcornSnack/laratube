@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\Videos\ConvertForStreaming;
 use Illuminate\Http\Request;
 use App\Models\Channel;
 
@@ -14,9 +15,11 @@ class UploadVideoController extends Controller
     }
 
     public function store(Channel $channel) {
-        return $channel->videos()->create([
+        $video = $channel->videos()->create([
             "title" => request()->title,
             "path" => request()->video->store("channels/{$channel->id}"),
         ]);
+        $this->dispatch(new ConvertForStreaming($video));
+        return $video;
     }
 }

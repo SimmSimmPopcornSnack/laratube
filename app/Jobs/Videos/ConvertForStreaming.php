@@ -2,6 +2,8 @@
 
 namespace App\Jobs\Videos;
 
+use FFMpeg\Format\Video\X264;
+use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 use App\Models\Video;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -22,7 +24,7 @@ class ConvertForStreaming implements ShouldQueue
      */
     public function __construct(Video $video)
     {
-        $this->vidoe = $video;
+        $this->video = $video;
     }
 
     /**
@@ -32,6 +34,16 @@ class ConvertForStreaming implements ShouldQueue
      */
     public function handle()
     {
-        echo "converted";
+        $low = (new X264())->setKiloBitrate(100); // 360p
+        $mid = (new X264())->setKiloBitrate(250);
+        $high = (new X264())->setKiloBitrate(500);
+
+        FFMpeg::fromDisk("local")
+        ->open($this->video->path)
+        ->exportForHLS()
+        ->addFormat($low)
+        ->addFormat($mid)
+        ->addFormat($high)
+        ->save("public/videos/{$this->video->id}/{$this->video->id}.m3u8");
     }
 }

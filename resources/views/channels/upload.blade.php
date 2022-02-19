@@ -14,7 +14,7 @@
                     <div class="my-4" v-for="video in videos">
                         <div class="progress mb-3">
                             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" :style="{width: `${video.percentage || progress[video.name]}%`}" aria-valuenow="50" aria-valuemin="0" aria-valuemin="100">
-                                @{{ video.percentage ? "Processing" : "Uploading" }}
+                                @{{ video.percentage ? video.percentage === 100 ? "Video processing completed." : "Processing" : "Uploading" }}
                             </div>
                         </div>
                         <div class="row">
@@ -25,9 +25,12 @@
                                 <img v-else :src="video.thumbnail" style="width: 100%;" alt="">
                             </div>
                             <div class="col-md-4">
-                                <div class="text-center">
+                                <a v-if="video.percentage && video.percentage === 100" target="_blank" :href="`/videos/${video.id}`">
+                                    @{{ video.title }}
+                                </a>
+                                <h4 v-else class="text-center">
                                     @{{ video.title || video.name }}
-                                </div>
+                                </h4>
                             </div>
                         </div>
                     </div>

@@ -5260,6 +5260,7 @@ module.exports = {
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
+Vue.config.ignoredElements = ["video-js"];
 (__webpack_require__(/*! ./components/subscribe-button */ "./resources/js/components/subscribe-button.js")["default"]);
 (__webpack_require__(/*! ./components/channel-uploads */ "./resources/js/components/channel-uploads.js")["default"]);
 var app = new Vue({

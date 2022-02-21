@@ -19,12 +19,18 @@
 
 @section("styles")
     <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" />
+    <style>
+        .vjs-default-skin {
+            width: 100%;
+        }
+    </style>
 @endsection
 
 
 @section("scripts")
     <script src="https://vjs.zencdn.net/7.17.0/video.min.js"></script>
     <script>
-        videojs("video")
+        window.CURRENT_VIDEO = '{{ $video->id }}';
     </script>
+    <script src="{{ asset('js/player.js') }}"></script>
 @endsection

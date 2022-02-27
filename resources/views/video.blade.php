@@ -14,9 +14,9 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h4 class="mt-3">
-                                Video title
+                                {{ $video->title }}
                             </h4>
-                            12 views
+                            {{ $video->views }} {{ Str::plural("view", $video->views) }}
                         </div>
 
                         <div>
@@ -82,12 +82,14 @@
                         <div class="media d-flex">
                             <img class="rounded-circle" src="https://picsum.photos/id/42/200/200" width="50" height="50" class="mr-3" alt="...">
                             <div class="media-body" style="margin-left: 10px;">
-                                <h5 class="mt-0 mb-0">Media heading</h5>
-                                <span class="small">Publiched on 21 August 2019</span>
+                                <h5 class="mt-0 mb-0">
+                                    {{ $video->channel->name }}
+                                </h5>
+                                <span class="small">Publiched on {{ $video->created_at->toFormattedDateString() }}</span>
                             </div>
                         </div>
 
-                        <button class="btn btn-danger">Subscribe</button>
+                        <subscribe-button :channel="{{ $video->channel }}" :initial-subscriptions="{{ $video->channel->subscriptions }}" />
                     </div>
                 </div>
             </div>

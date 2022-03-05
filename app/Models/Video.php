@@ -18,4 +18,8 @@ class Video extends Model
     public function votes() {
         return $this->morphMany(Vote::class, "voteable");
     }
+
+    public function comments() {
+        return $this->hasMany(Comment::class)->whereNull("parent_comment_id");
+    }
 }

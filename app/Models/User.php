@@ -58,6 +58,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
+
     public function toggleVote($entity, $type) {
         $vote = $entity->votes->where("user_id", $this->id)->first();
 

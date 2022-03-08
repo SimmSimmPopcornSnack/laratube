@@ -33,9 +33,16 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
+    props: ["video"],
     mounted() {
         this.fetchComments();
+    },
+    methods: {
+        fetchComments() {
+            axios.get(`/videos/${this.video.id}/comments`);
+        }
     }
 }
 </script>

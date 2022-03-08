@@ -8,6 +8,6 @@ use App\Models\Video;
 class CommentController extends Controller
 {
     public function index(Video $video) {
-        return $video->commnets()->paginate(5);
+        return $video->comments()->paginate(5);
     }
 }

@@ -61,7 +61,7 @@
                 </form>
                 @endif
             </div>
-            <comments></comments>
+            <comments :video="{{ $video }}"></comments>
         </div>
     </div>
 </div>

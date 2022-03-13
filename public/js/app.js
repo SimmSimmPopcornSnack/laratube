@@ -5316,6 +5316,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -5328,11 +5331,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.fetchComments();
   },
+  computed: {
+    auth: function auth() {
+      return __auth();
+    }
+  },
   data: function data() {
     return {
       comments: {
         data: []
-      }
+      },
+      newComment: ""
     };
   },
   methods: {
@@ -5345,6 +5354,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         // "data" is a reserved keyword in axios
         _this.comments = _objectSpread(_objectSpread({}, data), {}, {
           data: [].concat(_toConsumableArray(_this.comments.data), _toConsumableArray(data.data))
+        });
+      });
+    },
+    addComment: function addComment() {
+      var _this2 = this;
+
+      if (!this.newComment) return;
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post("/comments/".concat(this.video.id, "/"), {
+        body: this.newComment
+      }).then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.comments = _objectSpread(_objectSpread({}, _this2.comments), {}, {
+          data: [data].concat(_toConsumableArray(_this2.comments.data))
         });
       });
     }
@@ -12418,7 +12440,40 @@ var render = function () {
     "div",
     { staticClass: "card mt-5 p-5" },
     [
-      _vm._m(0),
+      _vm.auth
+        ? _c("div", { staticClass: "from-inline my-4 w-full d-flex" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.newComment,
+                  expression: "newComment",
+                },
+              ],
+              staticClass: "form-control from-control-sm w-80",
+              attrs: { type: "text" },
+              domProps: { value: _vm.newComment },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.newComment = $event.target.value
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-primary",
+                on: { click: _vm.addComment },
+              },
+              [_c("small", [_vm._v("Add comment")])]
+            ),
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _vm._l(_vm.comments.data, function (comment) {
         return _c("div", { staticClass: "media d-flex my-3 w-full" }, [
@@ -12450,13 +12505,24 @@ var render = function () {
                 ),
               ]),
               _vm._v(" "),
-              _c("votes", {
-                attrs: {
-                  default_votes: comment.votes,
-                  entity_id: comment.id,
-                  entity_owner: comment.user_id,
-                },
-              }),
+              _c(
+                "div",
+                { staticClass: "d-flex" },
+                [
+                  _c("votes", {
+                    attrs: {
+                      default_votes: comment.votes,
+                      entity_id: comment.id,
+                      entity_owner: comment.user_id,
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("button", { staticClass: "btn btn-sm btn-default ml-2" }, [
+                    _vm._v("Add reply"),
+                  ]),
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("replies", { attrs: { comment: comment } }),
             ],
@@ -12481,23 +12547,7 @@ var render = function () {
     2
   )
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "from-inline my-4 w-full d-flex" }, [
-      _c("input", {
-        staticClass: "form-control from-control-sm w-80",
-        attrs: { type: "text" },
-      }),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-sm btn-primary" }, [
-        _c("small", [_vm._v("Add comment")]),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -12523,8 +12573,6 @@ var render = function () {
   return _c(
     "div",
     [
-      _vm._m(0),
-      _vm._v(" "),
       _vm._l(_vm.replies.data, function (reply) {
         return _c("div", { staticClass: "media my-3 d-flex" }, [
           _c(
@@ -12581,23 +12629,7 @@ var render = function () {
     2
   )
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "from-inline my-4 w-full d-flex" }, [
-      _c("input", {
-        staticClass: "form-control from-control-sm w-80",
-        attrs: { type: "text" },
-      }),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-sm btn-primary" }, [
-        _c("small", [_vm._v("Add comment")]),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

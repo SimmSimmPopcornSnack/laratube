@@ -20,6 +20,6 @@ class Video extends Model
     }
 
     public function comments() {
-        return $this->hasMany(Comment::class)->whereNull("parent_comment_id");
+        return $this->hasMany(Comment::class)->whereNull("parent_comment_id")->orderBy("created_at", "DESC");
     }
 }

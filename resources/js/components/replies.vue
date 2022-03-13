@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div class="from-inline my-4 w-full d-flex">
+        <!-- <div class="from-inline my-4 w-full d-flex">
             <input type="text" class="form-control from-control-sm w-80">
             <button class="btn btn-sm btn-primary">
-                <small>Add comment</small>
+                <small>Add reply</small>
             </button>
-        </div>
+        </div> -->
         <div class="media my-3 d-flex" v-for="reply in replies.data">
             <a class="mr-3" href="#">
                 <!-- <img width="30" height="30" class="rounded-circle mr-3" src="https://picsum.photos/id/42/200/200"> -->

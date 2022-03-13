@@ -6,7 +6,7 @@
                 <small>Add comment</small>
             </button>
         </div>
-        <div class="media mt-3 d-flex" v-for="reply in replies.data">
+        <div class="media my-3 d-flex" v-for="reply in replies.data">
             <a class="mr-3" href="#">
                 <!-- <img width="30" height="30" class="rounded-circle mr-3" src="https://picsum.photos/id/42/200/200"> -->
                 <avatar :username="reply.user.name" :size="30" class="mr-3"></avatar>
@@ -14,6 +14,7 @@
             <div class="media-body" style="margin-left: 10px;">
                 <h6 class="mt-0">{{ reply.user.name }}</h6>
                 <small>{{ reply.body }}</small>
+                <votes :default_votes="reply.votes" :entity_id="reply.id" :entity_owner="reply.user_id"></votes>
             </div>
         </div>
 

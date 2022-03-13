@@ -5409,6 +5409,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["comment"],
@@ -12420,7 +12421,7 @@ var render = function () {
       _vm._m(0),
       _vm._v(" "),
       _vm._l(_vm.comments.data, function (comment) {
-        return _c("div", { staticClass: "media d-flex my-3" }, [
+        return _c("div", { staticClass: "media d-flex my-3 w-full" }, [
           _c(
             "div",
             [
@@ -12448,6 +12449,14 @@ var render = function () {
                   "\n                " + _vm._s(comment.body) + "\n            "
                 ),
               ]),
+              _vm._v(" "),
+              _c("votes", {
+                attrs: {
+                  default_votes: comment.votes,
+                  entity_id: comment.id,
+                  entity_owner: comment.user_id,
+                },
+              }),
               _vm._v(" "),
               _c("replies", { attrs: { comment: comment } }),
             ],
@@ -12517,7 +12526,7 @@ var render = function () {
       _vm._m(0),
       _vm._v(" "),
       _vm._l(_vm.replies.data, function (reply) {
-        return _c("div", { staticClass: "media mt-3 d-flex" }, [
+        return _c("div", { staticClass: "media my-3 d-flex" }, [
           _c(
             "a",
             { staticClass: "mr-3", attrs: { href: "#" } },
@@ -12542,7 +12551,16 @@ var render = function () {
               ]),
               _vm._v(" "),
               _c("small", [_vm._v(_vm._s(reply.body))]),
-            ]
+              _vm._v(" "),
+              _c("votes", {
+                attrs: {
+                  default_votes: reply.votes,
+                  entity_id: reply.id,
+                  entity_owner: reply.user_id,
+                },
+              }),
+            ],
+            1
           ),
         ])
       }),

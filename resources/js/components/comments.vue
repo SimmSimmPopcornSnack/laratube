@@ -6,7 +6,7 @@
                 <small>Add comment</small>
             </button>
         </div>
-        <div class="media d-flex my-3" v-for="comment in comments.data">
+        <div class="media d-flex my-3 w-full" v-for="comment in comments.data">
             <div>
                 <avatar :username="comment.user.name" :size="30" class="mr-3"></avatar>
             </div>
@@ -15,9 +15,9 @@
                 <small>
                     {{ comment.body }}
                 </small>
+                <votes :default_votes="comment.votes" :entity_id="comment.id" :entity_owner="comment.user_id"></votes>
                 <replies :comment="comment"></replies>
             </div>
-
         </div>
         <div class="text-center">
             <button v-if="comments.next_page_url" @click="fetchComments" class="btn btn-success">

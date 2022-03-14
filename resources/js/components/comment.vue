@@ -10,8 +10,18 @@
             </small>
             <div class="d-flex">
                 <votes :default_votes="comment.votes" :entity_id="comment.id" :entity_owner="comment.user_id"></votes>
-                <button class="btn btn-sm btn-default ml-2">Add reply</button>
+                <button @click="addingReply = !addingReply" class="btn btn-sm mx-2" :class="{ 'btn-default': !addingReply, 'btn-danger':addingReply }">
+                    {{ addingReply ? "Cancel" : "Add reply" }}
+                </button>
             </div>
+
+            <div v-if="addingReply" class="from-inline my-4 w-full d-flex">
+                <input type="text" class="form-control from-control-sm w-80">
+                <button class="btn btn-sm btn-primary">
+                    <small>Add reply</small>
+                </button>
+            </div>
+
             <replies :comment="comment"></replies>
         </div>
     </div>
@@ -24,6 +34,11 @@ export default {
     components: {
         Avatar,
         Replies,
+    },
+    data() {
+        return {
+            addingReply: false,
+        }
     },
     props: {
         comment: {

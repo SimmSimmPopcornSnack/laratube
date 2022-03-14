@@ -5284,12 +5284,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     Avatar: (vue_avatar__WEBPACK_IMPORTED_MODULE_0___default()),
     Replies: _replies_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      addingReply: false
+    };
   },
   props: {
     comment: {
@@ -5438,12 +5453,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -12579,12 +12588,42 @@ var render = function () {
               },
             }),
             _vm._v(" "),
-            _c("button", { staticClass: "btn btn-sm btn-default ml-2" }, [
-              _vm._v("Add reply"),
-            ]),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm mx-2",
+                class: {
+                  "btn-default": !_vm.addingReply,
+                  "btn-danger": _vm.addingReply,
+                },
+                on: {
+                  click: function ($event) {
+                    _vm.addingReply = !_vm.addingReply
+                  },
+                },
+              },
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.addingReply ? "Cancel" : "Add reply") +
+                    "\n            "
+                ),
+              ]
+            ),
           ],
           1
         ),
+        _vm._v(" "),
+        _vm.addingReply
+          ? _c("div", { staticClass: "from-inline my-4 w-full d-flex" }, [
+              _c("input", {
+                staticClass: "form-control from-control-sm w-80",
+                attrs: { type: "text" },
+              }),
+              _vm._v(" "),
+              _vm._m(0),
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _c("replies", { attrs: { comment: _vm.comment } }),
       ],
@@ -12592,7 +12631,16 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-sm btn-primary" }, [
+      _c("small", [_vm._v("Add reply")]),
+    ])
+  },
+]
 render._withStripped = true
 
 

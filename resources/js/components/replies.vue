@@ -45,6 +45,15 @@ export default {
                         ],
                     };
             });
+        },
+        addReply(newReply) {
+            this.replies = {
+                ...this.reply,
+                data: [
+                    newReply,
+                    ...this.replies.data,
+                ]
+            }
         }
     }
 }

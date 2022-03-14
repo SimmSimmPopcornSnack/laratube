@@ -27,6 +27,6 @@ class Comment extends Model
     }
 
     public function replies() {
-        return $this->hasMany(Comment::class, "parent_comment_id")->whereNotNull("parent_comment_id");
+        return $this->hasMany(Comment::class, "parent_comment_id")->whereNotNull("parent_comment_id")->orderBy("created_at", "DESC");
     }
 }

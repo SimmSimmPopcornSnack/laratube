@@ -29,7 +29,7 @@
                                         </g></g> </svg>
                                     </div>
                                 @endif
-                                <img src="{{ $channel->image() }}" alt="">
+                                <img style="margin-left: -13px;" src="{{ $channel->image() }}" alt="">
                             </div>
                         </div>
 

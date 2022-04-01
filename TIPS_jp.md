@@ -10,7 +10,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013230?start=
 
 >    php artisan make:auth
 
-に対応するが、必要ない。  
+に対応するが必要ない。  
 何故ならば、  
 
 >    composer require laravel/ui
@@ -55,7 +55,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013246?start=
 このコマンドは新規にターミナルを開いて実行した方が良い。というのも、このコマンドは常駐してソースコードに変更があるごとにコンパイルし直す仕様なので、コマンドを実行した後に終了してターミナルの入力画面に戻ってこないから。  
   
 # 既存のDatabaseのテーブルを一旦削除したいとき
-例えば、テーブルAのmigrationファイルを新しいタイムスタンプで作ったとき。新しいmigrationファイルでoho artisan migrateを実行すると、  
+例えば、テーブルAのmigrationファイルを新しいタイムスタンプで作ったとき。新しいmigrationファイルでphp artisan migrateを実行すると、  
 >   Illuminate\\Database\\QueryException
 >  SQLSTATE[42P07]: Duplicate table: 7 ERROR:  relation "A" already exists  
 
@@ -65,7 +65,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013246?start=
 >{
 >    public function up()
 >    {
->        Schema::dropIfExists("A");
+>***        Schema::dropIfExists("A");***
 >        Schema::create('A', function (Blueprint $table) {
 >            $table->bigIncrements('id');
 
@@ -98,7 +98,8 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013248#search
 しかし、これで実行すると  
 >SQLSTATE[22P02]: Invalid text representation: 7 ERROR: invalid input syntax for type bigint: "uuidの文字列"
 とエラーが出る。どうも、idに文字列(uuid)は代入できない、と怒られているらしい。udemyのビデオではidは弄らなくていいと言っているが、どうも僕の環境では変える必要がありそうだ。(その理由が、新バージョンだからなのかPostgreSQLだからなのかは不明。)　以下のようにする。  
-1. database\\migrationsのmigrationファイル  
+1. database\\migrationsのmigrationファイルを以下のように書き換え  
+
 >    public function up()
 >    {
 >        Schema::create('media', function (Blueprint $table) {
@@ -112,7 +113,8 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013248#search
 >            $table->string('name');
   
 2. models\\Media.phpを新規作成  
-><?php
+
+>&lt;?php
 >namespace App\\Models;
 >
 >use Spatie\\MediaLibrary\\MediaCollections\\Models\\Media as BaseMedia;
@@ -133,8 +135,10 @@ https://stackoverflow.com/questions/62171634/spatie-laravel-medialibrary-change-
 # Tinkerの使い方
 ゲスト側から  
 >php artisan tinker
+
 例えば、  
 >\\User::first()->load('channel');
+
 のように実行する。  
   
 storage/app/public以下のファイル(サムネイル)をブラウザで開こうとすると404 Not Foundになる  
@@ -149,8 +153,10 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013248#search
 の11:33。  
 原因は、\\public\\css\\app.cssの665行が  
 >  --bs-gutter-x: 1.5rem;
+
 のため。これを  
 >  --bs-gutter-x: 0rem;
+
 に変える。  
   
 # Vue DevTools
@@ -176,9 +182,11 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013256#search
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013256#questions/7748204
 の1:14で、  
 >window.Vue = require('vue').default;
+
 の必ず後に  
 >require("./components/subscribe-button").default;
 を置く。何故ならば、subscribe-button.jsの中で変数Vueを使うから。  
+
 あといつの段階か分からないが、どこかの段階でVuejsでは.defaultを付けないといけないようだ。  
 https://stackoverflow.com/questions/49138501/vue-warn-failed-to-mount-component-template-or-render-function-not-defined-i/49139332#49139332
 
@@ -284,10 +292,11 @@ https://github.com/bahdcoder/build-a-youtube-clone-in-laravel-and-vuejs/blob/341
 の0:29。  
 githubのbahdcoder / build-a-youtube-clone-in-laravel-and-vuejsの、resources/js/components/votes.vueにある。具体的なリンクは、  
 https://github.com/bahdcoder/build-a-youtube-clone-in-laravel-and-vuejs/blob/341e0feab001ebbbfceab3f4c0f0ebf350866a65/resources/js/components/votes.vue  
-また、このままだと大きすぎるので同じくvideo.blade.phpの<style>以下に、
+また、このままだと大きすぎるので同じくvideo.blade.phpの&lt;style&gt;以下に、
 >.thumbs-up, .thumbs-down {
 >	width: 20px;
 >}
+
 を追加。というか、動画の0:00を見ると指定するstyleが全部載っている。
   
   
@@ -356,18 +365,18 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013402#search
 の4:07。Load Repliesが中心揃えになるべきが実際はそうはならない。  
 Element Inspectionで見ると、親コンテナがwidthが固定されてないのが原因。  
 (w-fullだと後に付けるコメントのいいね・悪いねボタンの幅が確保できないのでw-80を採用したくなるが、結局コメントの左下に付けるので幅の心配はしなくていいのでw-full。)  
-そこで、<repilies></replies>が入っているcomponent.vueの  
+そこで、&lt;repilies&gt;&lt;//replies&gt;が入っているcomponent.vueの  
   
->            <div class="media-body" style="margin-left: 10px;">
->                <h6 class="mt-0">{{ comment.user.name }}</h6>
->                <small>
+>            &lt;div class="media-body" style="margin-left: 10px;"&gt;
+>                &lt;h6 class="mt-0"&gt;{{ comment.user.name }}&lt;//h6&gt;
+>                &lt;small&gt;
 >                    {{ comment.body }}
->                </small>
->                <replies></replies>
->            </div>
+>                &lt;//small&gt;
+>                &lt;replies>&lt;//replies&gt;
+>            &lt;//div&gt;
 
 を
->            <div class="media-body w-full" style="margin-left: 10px;">
+>            <div class="media-body ***w-full***" style="margin-left: 10px;">
 >                <h6 class="mt-0">{{ comment.user.name }}</h6>
 >                <small>
 >                    {{ comment.body }}
@@ -392,10 +401,10 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013402#search
 # コメントのReplyのCancelボタンが左隣のいいね・よくないねと重なる
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013410#search
 の4:59。  
-><button @click="addingReply = !addingReply" class="btn btn-sm mr-2" ...>
+><button @click="addingReply = !addingReply" class="btn btn-sm m***r***-2" ...>
 
 を
-><button @click="addingReply = !addingReply" class="btn btn-sm mx-2" ...>
+><button @click="addingReply = !addingReply" class="btn btn-sm m***x***-2" ...>
 
 にする。  
 
@@ -404,7 +413,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013414#search
 の5:33。  
 これは、階層最上位の->orderBy("created_at", "DESC");を入れる。  
 Comment.phpのreplies()関数で、  
->return $this->hasMany(Comment::class, "parent_comment_id")->whereNotNull("parent_comment_id")->orderBy("created_at", "DESC");
+>return $this->hasMany(Comment::class, "parent_comment_id")->whereNotNull("parent_comment_id")***->orderBy("created_at", "DESC")***;
 を追加。  
 
 # Paginationでページ数の数字が表示されず、PreviousとNextが表示される。
@@ -423,7 +432,7 @@ https://laravel.com/docs/8.x/pagination#using-bootstrap
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013418#search
 の8:51。  
 classの設定のrowをd-flexに変える
->    <div class="d-flex justify-content-center" style="text-align: center;">
+>    <div class="***d-flex*** justify-content-center" style="text-align: center;">
 >        {!! $videos->links() !!}
 >    </div>
 

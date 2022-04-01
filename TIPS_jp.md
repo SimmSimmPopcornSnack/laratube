@@ -44,7 +44,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013246#overvi
 を追加。また  
 \\app\\Providers\\RouteServiceProvider.phpの  
 
->        // protected $namespace = 'App\\\\Http\\\\Controllers';
+>        // protected $namespace = 'App\\Http\\Controllers';
   
 のコメントを外す。  
 
@@ -60,14 +60,15 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013246?start=
 >  SQLSTATE[42P07]: Duplicate table: 7 ERROR:  relation "A" already exists  
 
 
-とエラーになる。この場合は一旦テーブルを消して作り直さないといけない。それをするには新しいmigrationファイルで、
->class CreateATable extends Migration
->{
->    public function up()
->    {
+とエラーになる。この場合は一旦テーブルを消して作り直さないといけない。それをするには新しいmigrationファイルで、  
+
+>class CreateATable extends Migration  
+>{  
+>    public function up()  
+>    {  
 >***        Schema::dropIfExists("A");***
->        Schema::create('A', function (Blueprint $table) {
->            $table->bigIncrements('id');
+>        Schema::create('A', function (Blueprint $table) {  
+>            $table->bigIncrements('id');  
 
 のようにSchema::dropIfExist("A");を加える。  
 また、Aに紐づいたpackageがある場合にはそれも削除する。今の場合はA=mediaでspatie/laravel-medialibraryが紐づいてるから、それを削除する：  
@@ -365,15 +366,15 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013402#search
 の4:07。Load Repliesが中心揃えになるべきが実際はそうはならない。  
 Element Inspectionで見ると、親コンテナがwidthが固定されてないのが原因。  
 (w-fullだと後に付けるコメントのいいね・悪いねボタンの幅が確保できないのでw-80を採用したくなるが、結局コメントの左下に付けるので幅の心配はしなくていいのでw-full。)  
-そこで、&lt;repilies&gt;&lt;//replies&gt;が入っているcomponent.vueの  
+そこで、&lt;repilies&gt;&lt;/replies&gt;が入っているcomponent.vueの  
   
->            &lt;div class="media-body" style="margin-left: 10px;"&gt;
->                &lt;h6 class="mt-0"&gt;{{ comment.user.name }}&lt;//h6&gt;
->                &lt;small&gt;
+>            <div class="media-body" style="margin-left: 10px;">
+>                <h6 class="mt-0">{{ comment.user.name }}</h6>
+>                <small>
 >                    {{ comment.body }}
->                &lt;//small&gt;
->                &lt;replies>&lt;//replies&gt;
->            &lt;//div&gt;
+>                </small>
+>                <replies></replies>
+>            </div>
 
 を
 >            <div class="media-body ***w-full***" style="margin-left: 10px;">
@@ -413,7 +414,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013414#search
 の5:33。  
 これは、階層最上位の->orderBy("created_at", "DESC");を入れる。  
 Comment.phpのreplies()関数で、  
->return $this->hasMany(Comment::class, "parent_comment_id")->whereNotNull("parent_comment_id")***->orderBy("created_at", "DESC")***;
+>return $this->hasMany(Comment::class, "parent_comment_id")->whereNotNull("parent_comment_id")->orderBy("created_at", "DESC");
 を追加。  
 
 # Paginationでページ数の数字が表示されず、PreviousとNextが表示される。
@@ -432,7 +433,7 @@ https://laravel.com/docs/8.x/pagination#using-bootstrap
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013418#search
 の8:51。  
 classの設定のrowをd-flexに変える
->    <div class="***d-flex*** justify-content-center" style="text-align: center;">
+>    <div class="d-flex justify-content-center" style="text-align: center;">
 >        {!! $videos->links() !!}
 >    </div>
 

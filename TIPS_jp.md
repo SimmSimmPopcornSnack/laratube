@@ -200,8 +200,10 @@ https://stackoverflow.com/questions/49138501/vue-warn-failed-to-mount-component-
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013258#questions/7748204
 の0:28。  
 >$factory->define(...
+
 や
 >protected $model = ...
+
 は必要ない。  
 https://www.amitmerchant.com/class-based-model-factories-in-laravel-8/
 https://stackoverflow.com/questions/70310252/why-is-php-artisan-makefactory-not-generating-with-a-model/70310528#70310528
@@ -270,9 +272,9 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013292#questi
 https://stackoverflow.com/questions/58811513/413-request-entity-too-large-nginx-server-in-laravel-homestead-for-windows/58812002#58812002
 
 # Laravel 8 Installation -> Monolog 1.3 error
-https://github.com/PHP-FFMpeg/PHP-FFMpeg/issues/823#issuecomment-887729341
-composer.lockを消して、
-composer require pbmedia/laravel-ffmpegを実行。
+https://github.com/PHP-FFMpeg/PHP-FFMpeg/issues/823#issuecomment-887729341  
+composer.lockを消して、  
+composer require pbmedia/laravel-ffmpegを実行。  
 https://github.com/PHP-FFMpeg/PHP-FFMpeg/pull/849
   
   
@@ -292,7 +294,8 @@ https://tutorialmeta.com/question/installing-ffmpeg-in-lumen
   
 # 動画アップロードのコードを変えたときに反映されない
 大抵は、
->php artisan queue:work --sleep=0 --timeout 60000
+>php artisan queue:work --sleep=0 --timeout 60000  
+  
 をゲスト側で一旦CTRL+Cで止めて再実行すればいい。  
 
 

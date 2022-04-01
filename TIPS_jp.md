@@ -64,11 +64,11 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013246?start=
 
 >class CreateATable extends Migration  
 >{  
->    public function up()  
->    {  
->***        Schema::dropIfExists("A");***
->        Schema::create('A', function (Blueprint $table) {  
->            $table->bigIncrements('id');  
+>     public function up()  
+>     {  
+>          Schema::dropIfExists("A");
+>          Schema::create('A', function (Blueprint $table) {  
+>               $table->bigIncrements('id');  
 
 のようにSchema::dropIfExist("A");を加える。  
 また、Aに紐づいたpackageがある場合にはそれも削除する。今の場合はA=mediaでspatie/laravel-medialibraryが紐づいてるから、それを削除する：  

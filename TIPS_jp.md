@@ -64,11 +64,11 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013246?start=
 
 >class CreateATable extends Migration  
 >{  
->     public function up()  
->     {  
->          Schema::dropIfExists("A");
->          Schema::create('A', function (Blueprint $table) {  
->               $table->bigIncrements('id');  
+>    public function up()  
+>    {  
+>        Schema::dropIfExists("A");
+>        Schema::create('A', function (Blueprint $table) {  
+>            $table->bigIncrements('id');  
 
 のようにSchema::dropIfExist("A");を加える。  
 また、Aに紐づいたpackageがある場合にはそれも削除する。今の場合はA=mediaでspatie/laravel-medialibraryが紐づいてるから、それを削除する：  
@@ -98,34 +98,35 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013248#search
 の2:18で、primaryKeyをidを整数のincrementsにしている。  
 しかし、これで実行すると  
 >SQLSTATE[22P02]: Invalid text representation: 7 ERROR: invalid input syntax for type bigint: "uuidの文字列"
+
 とエラーが出る。どうも、idに文字列(uuid)は代入できない、と怒られているらしい。udemyのビデオではidは弄らなくていいと言っているが、どうも僕の環境では変える必要がありそうだ。(その理由が、新バージョンだからなのかPostgreSQLだからなのかは不明。)　以下のようにする。  
 1. database\\migrationsのmigrationファイルを以下のように書き換え  
 
->    public function up()
->    {
->        Schema::create('media', function (Blueprint $table) {
->***            $table->uuid('uuid')->unique()->primary();  ***
->            // $table->bigIncrements('id');
->            // $table->morphs('model');
->***            $table->string("model_type");  ***
->***            $table->uuid("model_id");  ***
->            // $table->uuid('uuid')->nullable()->unique();
->            $table->string('collection_name');
->            $table->string('name');
+>    public function up()  
+>    {  
+>        Schema::create('media', function (Blueprint $table) {  
+>            $table->uuid('uuid')->unique()->primary();  
+>            // $table->bigIncrements('id');  
+>            // $table->morphs('model');  
+>            $table->string("model_type");  
+>            $table->uuid("model_id");  
+>            // $table->uuid('uuid')->nullable()->unique();  
+>            $table->string('collection_name');  
+>            $table->string('name');  
   
 2. models\\Media.phpを新規作成  
 
->&lt;?php
->namespace App\\Models;
->
->use Spatie\\MediaLibrary\\MediaCollections\\Models\\Media as BaseMedia;
->
->class Media extends BaseMedia {
->    protected $primaryKey = "uuid";
->    protected $keyType = "string";
->    public $incremanting = false;
->}
-
+>&lt;?php  
+>namespace App\\Models;  
+>  
+>use Spatie\\MediaLibrary\\MediaCollections\\Models\\Media as BaseMedia;  
+>  
+>class Media extends BaseMedia {  
+>    protected $primaryKey = "uuid";  
+>    protected $keyType = "string";  
+>    public $incremanting = false;  
+>}  
+  
 3. config\\media-library.phpを変更  
   
 >    'media_model' => App\\Models\\Media::class,
@@ -138,7 +139,7 @@ https://stackoverflow.com/questions/62171634/spatie-laravel-medialibrary-change-
 >php artisan tinker
 
 例えば、  
->\\User::first()->load('channel');
+>\\User::first()->load('channel');  
 
 のように実行する。  
   
@@ -146,6 +147,7 @@ storage/app/public以下のファイル(サムネイル)をブラウザで開こ
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013248#search
 の10:25。ホスト側のコマンドラインを管理者権限で立ち上げて、プロジェクトフォルダに移動。そして、  
 >php artisan storage:link
+
 を実行。その後にブラウザを再読み込みとかすると表示されるようになる。  
 https://qiita.com/shioharu_/items/608d024c48d9d9b5604f  
 
@@ -174,8 +176,10 @@ https://github.com/twbs/bootstrap/blob/main/dist/js/bootstrap.esm.js.map
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013256#search
 の3:57。
 >"{{ }}"
+
 を文字化けしないように
 >'{!! !!}'
+
 とする。シングルクォーテーションが必要。  
   
   
@@ -186,6 +190,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013256#questi
 
 の必ず後に  
 >require("./components/subscribe-button").default;
+
 を置く。何故ならば、subscribe-button.jsの中で変数Vueを使うから。  
 
 あといつの段階か分からないが、どこかの段階でVuejsでは.defaultを付けないといけないようだ。  
@@ -202,16 +207,16 @@ https://www.amitmerchant.com/class-based-model-factories-in-laravel-8/
 https://stackoverflow.com/questions/70310252/why-is-php-artisan-makefactory-not-generating-with-a-model/70310528#70310528
 https://github.com/laravel/framework/pull/39310
 最新バージョン(8.82.0)では  
->    public function definition()
->    {
->        return [
->            "name" => $this->faker->sentence(3),
->            "user_id" => function() {
->                return User::factory()->create()->id;
->            },
->            "description" => $this->faker->sentence(30),
->        ];
->    }
+>    public function definition()  
+>    {  
+>        return [  
+>            "name" => $this->faker->sentence(3),  
+>            "user_id" => function() {  
+>                return User::factory()->create()->id;  
+>            },  
+>            "description" => $this->faker->sentence(30),  
+>        ];  
+>    }  
   
 が正しい。ここではdefinition()の実装だけでなく、
 >factory(User::class)->create()
@@ -228,8 +233,10 @@ Factoriesフォルダ内のファイルは、Channel.phpなどではなくChanne
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013258#questions/7748204
 の4:58では、  
 >factory(Subscription::class, 10000)->create()
+
 ではなく、
 >Subscription::factory()->count(10000)->create()
+
 となる。  
 https://laravel.com/docs/8.x/database-testing#instantiating-models
 
@@ -241,9 +248,9 @@ Javascriptの方ではinitialSubscriptionsでcamelCase,一方bladeではinitial-
 https://medium.com/js-dojo/properly-passing-data-from-laravel-blade-to-vue-components-57689b43d7fc
 
 そうしないと次のエラーがブラウザで出る。
->[Vue tip]: Prop "initialsubscriptions" is passed to component <Anonymous>, but the declared prop name is "initialSubscriptions". Note that HTML attributes are case-insensitive and camelCased props need to use their kebab-case equivalents when using in-DOM templates. You should probably use "initial-subscriptions" instead of "initialSubscriptions"
->
->[Vue warn]: Missing required prop: "initialSubscriptions"
+>[Vue tip]: Prop "initialsubscriptions" is passed to component <Anonymous>, but the declared prop name is "initialSubscriptions". Note that HTML attributes are case-insensitive and camelCased props need to use their kebab-case equivalents when using in-DOM templates. You should probably use "initial-subscriptions" instead of "initialSubscriptions"  
+>  
+>[Vue warn]: Missing required prop: "initialSubscriptions"  
 
 
 # 動画がアップロードできない：413 (Request Entity Too Large)
@@ -251,9 +258,9 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013292#questi
 の10:23。  
 
 ゲスト側から、nginxの設定ファイル/etc/nginx/nginx.congに、  
->http {
->	upload_max_body: 100M;
->}
+>http {  
+>	upload_max_body: 100M;  
+>}  
 として、  
 
 >sudo -s systemctl restart nginx
@@ -277,6 +284,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013310?compon
   
 これは、ゲスト側にffmpegが入ってないから。
 >sudo -s apt-get install ffmpeg
+
 で解決。  
   
 https://tutorialmeta.com/question/installing-ffmpeg-in-lumen
@@ -294,9 +302,9 @@ https://github.com/bahdcoder/build-a-youtube-clone-in-laravel-and-vuejs/blob/341
 githubのbahdcoder / build-a-youtube-clone-in-laravel-and-vuejsの、resources/js/components/votes.vueにある。具体的なリンクは、  
 https://github.com/bahdcoder/build-a-youtube-clone-in-laravel-and-vuejs/blob/341e0feab001ebbbfceab3f4c0f0ebf350866a65/resources/js/components/votes.vue  
 また、このままだと大きすぎるので同じくvideo.blade.phpの&lt;style&gt;以下に、
->.thumbs-up, .thumbs-down {
->	width: 20px;
->}
+>.thumbs-up, .thumbs-down {  
+>	width: 20px;  
+>}  
 
 を追加。というか、動画の0:00を見ると指定するstyleが全部載っている。
   
@@ -310,6 +318,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013370?compon
 の4:48。  
 VSCodeでvueファイルにコードを書きこむとintellisenseエラーがたくさん出る。例えば、  
 >JSX expressions must have one parent element
+
 本質的なエラーではなく、VSCodeにvue用のエクステンションが入ってないのが原因。  
 例えば、Veturをインストールする。  
 https://code.visualstudio.com/docs/nodejs/vuejs-tutorial
@@ -325,11 +334,13 @@ https://stackoverflow.com/questions/38746394/text-center-and-text-right-not-work
 # textareaに入力したあとにsubmitすると冒頭に余計な余白が入る
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013372#questions
 の6:18。
->                            <textarea name="description" cols="3" rows="3" class="form-control">
+>               <textarea name="description" cols="3" rows="3" class="form-control">
 >                                {{ $video->description }}
 >			    </textarea>
+
 のように{{ $video->description }}の前に余計な余白を入れてはいけない。正しくは、
->                            <textarea name="description" cols="3" rows="3" class="form-control">{{ $video->description }}</textarea>
+>               <textarea name="description" cols="3" rows="3" class="form-control">{{ $video->description }}</textarea>
+
 のように1行で記述。  
   
 # GitHubのHTMLファイルを開く
@@ -352,6 +363,7 @@ avatarの後を改行しないためにd-flexキーワードを付けたが、�
 >            <div>
 >                <avatar :username="comment.user.name" :size="30"></avatar>
 >            </div>
+
 とすると上手くいく。  
   
   
@@ -415,6 +427,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013414#search
 これは、階層最上位の->orderBy("created_at", "DESC");を入れる。  
 Comment.phpのreplies()関数で、  
 >return $this->hasMany(Comment::class, "parent_comment_id")->whereNotNull("parent_comment_id")->orderBy("created_at", "DESC");
+
 を追加。  
 
 # Paginationでページ数の数字が表示されず、PreviousとNextが表示される。

@@ -13,10 +13,12 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013230?start=
 に対応するが必要ない。  
 何故ならば、  
 
+>```
 >    composer require laravel/ui
 >    php artisan ui vue --auth
 >    php artisan migrate
 >    composer update
+>```
 
 https://stackoverflow.com/questions/34545641/php-artisan-makeauth-command-is-not-defined/34546836#34546836  
 を代わりに実行すればよい。  
@@ -63,6 +65,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013246?start=
 
 とエラーになる。この場合は一旦テーブルを消して作り直さないといけない。それをするには新しいmigrationファイルで、  
 
+>```
 >class CreateATable extends Migration  
 >{  
 >    public function up()  
@@ -70,6 +73,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013246?start=
 >        Schema::dropIfExists("A");
 >        Schema::create('A', function (Blueprint $table) {  
 >            $table->bigIncrements('id');  
+>```
 
 のようにSchema::dropIfExist("A");を加える。  
 また、Aに紐づいたpackageがある場合にはそれも削除する。今の場合はA=mediaでspatie/laravel-medialibraryが紐づいてるから、それを削除する：  
@@ -81,10 +85,12 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013246?start=
 # spatie/laravel-medialibraryのmigration
 少なくとも9.11.1バージョンではmigrationファイルに  
 
+>```
 >    public function down()
 >    {
 >        Schema::dropIfExists('media');
 >    }
+>```
 
 を加えないといけない。これが無いとphp artisan migrate:refreshしたときに一旦テーブルが削除されないまま続行するので前項のエラーが出る。  
 https://github.com/spatie/laravel-medialibrary/issues/2534  
@@ -104,6 +110,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013248#search
 とエラーが出る。どうも、idに文字列(uuid)は代入できない、と怒られているらしい。udemyのビデオではidは弄らなくていいと言っているが、どうも僕の環境では変える必要がありそうだ。(その理由が、新バージョンだからなのかPostgreSQLだからなのかは不明。)　以下のようにする。  
 1. database\\migrationsのmigrationファイルを以下のように書き換え  
 
+>```
 >    public function up()  
 >    {  
 >        Schema::create('media', function (Blueprint $table) {  
@@ -115,9 +122,11 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013248#search
 >            // $table->uuid('uuid')->nullable()->unique();  
 >            $table->string('collection_name');  
 >            $table->string('name');  
+>```
   
 2. models\\Media.phpを新規作成  
 
+>```
 >&lt;?php  
 >namespace App\\Models;  
 >  
@@ -128,6 +137,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013248#search
 >    protected $keyType = "string";  
 >    public $incremanting = false;  
 >}  
+>```
   
 3. config\\media-library.phpを変更  
   
@@ -218,6 +228,7 @@ https://stackoverflow.com/questions/70310252/why-is-php-artisan-makefactory-not-
 https://github.com/laravel/framework/pull/39310
 最新バージョン(8.82.0)では
 
+>```
 >    public function definition()  
 >    {  
 >        return [  
@@ -228,6 +239,7 @@ https://github.com/laravel/framework/pull/39310
 >            "description" => $this->faker->sentence(30),  
 >        ];  
 >    }  
+>```
   
 が正しい。ここではdefinition()の実装だけでなく、
 >factory(User::class)->create()
@@ -276,6 +288,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013292#questi
 >http {  
 >	upload_max_body: 100M;  
 >}  
+  
 として、  
 
 >sudo -s systemctl restart nginx
@@ -461,10 +474,12 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013418#search
 の8:51。  
 まず、Laravel 8から何故かpaginatorがデフォルトでbootstrapからtailwindを使うように変更になったので、デザインが異なる。bootstrapを使うようにするには。app\AppServiceProvider.phpのboot関数を、  
 
+>```
 >    public function boot()
 >    {
 >        Paginator::useBootstrap();
 >    }
+>```
 
 とする。  
 https://laravel.com/docs/8.x/pagination#using-bootstrap  

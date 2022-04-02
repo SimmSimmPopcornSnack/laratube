@@ -56,6 +56,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013246?start=
   
 # 既存のDatabaseのテーブルを一旦削除したいとき
 例えば、テーブルAのmigrationファイルを新しいタイムスタンプで作ったとき。新しいmigrationファイルでphp artisan migrateを実行すると、  
+
 >   Illuminate\\Database\\QueryException
 >  SQLSTATE[42P07]: Duplicate table: 7 ERROR:  relation "A" already exists  
 
@@ -79,6 +80,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013246?start=
 
 # spatie/laravel-medialibraryのmigration
 少なくとも9.11.1バージョンではmigrationファイルに  
+
 >    public function down()
 >    {
 >        Schema::dropIfExists('media');
@@ -136,9 +138,11 @@ https://stackoverflow.com/questions/62171634/spatie-laravel-medialibrary-change-
   
 # Tinkerの使い方
 ゲスト側から  
+
 >php artisan tinker
 
 例えば、  
+
 >\\User::first()->load('channel');  
 
 のように実行する。  
@@ -155,9 +159,11 @@ https://qiita.com/shioharu_/items/608d024c48d9d9b5604f
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013248#search
 の11:33。  
 原因は、\\public\\css\\app.cssの665行が  
+
 >  --bs-gutter-x: 1.5rem;
 
 のため。これを  
+
 >  --bs-gutter-x: 0rem;
 
 に変える。  
@@ -175,9 +181,11 @@ https://github.com/twbs/bootstrap/blob/main/dist/js/bootstrap.esm.js.map
 # !!の使い方
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013256#search
 の3:57。
+
 >"{{ }}"
 
 を文字化けしないように
+
 >'{!! !!}'
 
 とする。シングルクォーテーションが必要。  
@@ -208,7 +216,8 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013258#questi
 https://www.amitmerchant.com/class-based-model-factories-in-laravel-8/
 https://stackoverflow.com/questions/70310252/why-is-php-artisan-makefactory-not-generating-with-a-model/70310528#70310528
 https://github.com/laravel/framework/pull/39310
-最新バージョン(8.82.0)では  
+最新バージョン(8.82.0)では
+
 >    public function definition()  
 >    {  
 >        return [  
@@ -233,10 +242,12 @@ https://qiita.com/nunulk/items/37cfe88b5fa999c71ea1
 Factoriesフォルダ内のファイルは、Channel.phpなどではなくChannelFactory.phpと自動的になる。  
 
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013258#questions/7748204
-の4:58では、  
+の4:58では、
+
 >factory(Subscription::class, 10000)->create()
 
 ではなく、
+
 >Subscription::factory()->count(10000)->create()
 
 となる。  
@@ -250,6 +261,7 @@ Javascriptの方ではinitialSubscriptionsでcamelCase,一方bladeではinitial-
 https://medium.com/js-dojo/properly-passing-data-from-laravel-blade-to-vue-components-57689b43d7fc
 
 そうしないと次のエラーがブラウザで出る。
+
 >[Vue tip]: Prop "initialsubscriptions" is passed to component <Anonymous>, but the declared prop name is "initialSubscriptions". Note that HTML attributes are case-insensitive and camelCased props need to use their kebab-case equivalents when using in-DOM templates. You should probably use "initial-subscriptions" instead of "initialSubscriptions"  
 >  
 >[Vue warn]: Missing required prop: "initialSubscriptions"  
@@ -260,6 +272,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013292#questi
 の10:23。  
 
 ゲスト側から、nginxの設定ファイル/etc/nginx/nginx.congに、  
+
 >http {  
 >	upload_max_body: 100M;  
 >}  
@@ -285,6 +298,7 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013310?compon
 >[2022-02-12 09:20:42] local.ERROR: Unable to load FFMpeg {"exception":"[object] (FFMpeg\\\\Exception\\\\ExecutableNotFoundException(code: 0): Unable to load FFMpeg at /home/vagrant/code/......./laratube/vendor/php-ffmpeg/php-ffmpeg/src/FFMpeg/Driver/FFMpegDriver.php:55)
   
 これは、ゲスト側にffmpegが入ってないから。
+
 >sudo -s apt-get install ffmpeg
 
 で解決。  
@@ -294,6 +308,7 @@ https://tutorialmeta.com/question/installing-ffmpeg-in-lumen
   
 # 動画アップロードのコードを変えたときに反映されない
 大抵は、
+
 >php artisan queue:work --sleep=0 --timeout 60000  
   
 をゲスト側で一旦CTRL+Cで止めて再実行すればいい。  
@@ -305,6 +320,7 @@ https://github.com/bahdcoder/build-a-youtube-clone-in-laravel-and-vuejs/blob/341
 githubのbahdcoder / build-a-youtube-clone-in-laravel-and-vuejsの、resources/js/components/votes.vueにある。具体的なリンクは、  
 https://github.com/bahdcoder/build-a-youtube-clone-in-laravel-and-vuejs/blob/341e0feab001ebbbfceab3f4c0f0ebf350866a65/resources/js/components/votes.vue  
 また、このままだと大きすぎるので同じくvideo.blade.phpの&lt;style&gt;以下に、
+
 >.thumbs-up, .thumbs-down {  
 >	width: 20px;  
 >}  
@@ -337,11 +353,13 @@ https://stackoverflow.com/questions/38746394/text-center-and-text-right-not-work
 # textareaに入力したあとにsubmitすると冒頭に余計な余白が入る
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013372#questions
 の6:18。
+
 >               <textarea name="description" cols="3" rows="3" class="form-control">
 >                                {{ $video->description }}
 >			    </textarea>
 
 のように{{ $video->description }}の前に余計な余白を入れてはいけない。正しくは、
+
 >               <textarea name="description" cols="3" rows="3" class="form-control">{{ $video->description }}</textarea>
 
 のように1行で記述。  
@@ -359,9 +377,11 @@ https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013394#search
 の11:36。  
 avatarの後を改行しないためにd-flexキーワードを付けたが、副作用としてvue-avatarの縦横1:1にならない。横が縮む。  
 そこで、
+
 >        <div class="media d-flex" v-for="comment in comments.data">
 >            <avatar :username="comment.user.name" :size="30"></avatar>
 を
+
 >        <div class="media d-flex" v-for="comment in comments.data">
 >            <div>
 >                <avatar :username="comment.user.name" :size="30"></avatar>
@@ -392,6 +412,7 @@ Element Inspectionで見ると、親コンテナがwidthが固定されてない
 >            </div>
 
 を
+
 >            <div class="media-body ***w-full***" style="margin-left: 10px;">
 >                <h6 class="mt-0">{{ comment.user.name }}</h6>
 >                <small>
@@ -404,10 +425,12 @@ Element Inspectionで見ると、親コンテナがwidthが固定されてない
   
 # 2番目のコメントに返信を追加するときのエラー
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013402#search
-の17:27。  
+の17:27。
+
 >factory(Comment::class, 50)->create(["comment_id"=>"f1d63a98-cebd-4b8c-8aff-1eea85b999e2"]);
 
 は、
+
 >Comment::factory()->count(50)->create(
 >['parent_comment_id'=>'f1d63a98-cebd-4b8c-8aff-1eea85b999e2']);
 
@@ -437,6 +460,7 @@ Comment.phpのreplies()関数で、
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013418#search
 の8:51。  
 まず、Laravel 8から何故かpaginatorがデフォルトでbootstrapからtailwindを使うように変更になったので、デザインが異なる。bootstrapを使うようにするには。app\AppServiceProvider.phpのboot関数を、  
+
 >    public function boot()
 >    {
 >        Paginator::useBootstrap();
@@ -449,9 +473,10 @@ https://laravel.com/docs/8.x/pagination#using-bootstrap
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013418#search
 の8:51。  
 classの設定のrowをd-flexに変える
-><div class="d-flex justify-content-center" style="text-align: center;">
->    {!! $videos->links() !!}
-></div>
+
+>    <div class="d-flex justify-content-center" style="text-align: center;">
+>        {!! $videos->links() !!}
+>    </div>
 
 https://note.com/kakidamediary/n/nc7208b587d0c  
   

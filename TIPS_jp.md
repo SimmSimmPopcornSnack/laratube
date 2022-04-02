@@ -473,10 +473,11 @@ https://laravel.com/docs/8.x/pagination#using-bootstrap
 https://www.udemy.com/course/build-a-youtube-clone/learn/lecture/15013418#search
 の8:51。  
 classの設定のrowをd-flexに変える
-
+```
 >    <div class="d-flex justify-content-center" style="text-align: center;">
 >        {!! $videos->links() !!}
 >    </div>
+```
 
 https://note.com/kakidamediary/n/nc7208b587d0c  
   
